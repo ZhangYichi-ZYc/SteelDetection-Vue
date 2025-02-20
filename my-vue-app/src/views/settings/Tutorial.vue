@@ -1,10 +1,12 @@
-<script setup>
-</script>
-
 <template>
-  <div>tur</div>
+  <div class="tutorial-container">
+    <h2>连接教程</h2>
+    <p>这里是连接教程页面。</p>
+  </div>
 </template>
-  
-<style lang='less' scoped>
 
+<style scoped>
+.tutorial-container {
+  padding: 2rem;
+}
 </style>

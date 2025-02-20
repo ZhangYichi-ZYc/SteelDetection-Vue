@@ -1,10 +1,12 @@
-<script setup>
-</script>
-
 <template>
-  <div>purchase</div>
+  <div class="purchase-container">
+    <h2>设备购买</h2>
+    <p>这里是设备购买页面。</p>
+  </div>
 </template>
-  
-<style lang='less' scoped>
 
+<style scoped>
+.purchase-container {
+  padding: 2rem;
+}
 </style>
