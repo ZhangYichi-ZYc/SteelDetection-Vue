@@ -1,14 +1,59 @@
 <template>
   <div class="settings-container">
-    <!-- 左侧导航栏 -->
-    <div class="sidebar">
-      <router-link :to="{ name: 'Tutorial' }">连接教程</router-link>
-      <router-link :to="{ name: 'Device' }">设备管理</router-link>
-      <router-link :to="{ name: 'Purchase' }">设备购买</router-link>
-      <router-link :to="{ name: 'FAQ' }">常见问题</router-link>
-    </div>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+      <span>系统设置</span>
+    </header>
 
-    <!-- 子页面出口 -->
-    <router-view></router-view>
+    <!-- 主体内容 -->
+    <div class="main-content">
+      <!-- 左侧导航栏 -->
+      <div class="sidebar">
+        <el-menu>
+          <el-menu-item index="1">连接教程</el-menu-item>
+          <el-menu-item index="2">设备管理</el-menu-item>
+          <el-menu-item index="3">设备购买</el-menu-item>
+          <el-menu-item index="4">常见问题</el-menu-item>
+        </el-menu>
+      </div>
+
+      <!-- 右侧内容区 -->
+      <div class="content">
+        <router-view></router-view>
+      </div>
+    </div>
   </div>
 </template>
+
+<script>
+import { ElMenu, ElMenuItem } from 'element-plus'
+
+export default {
+  components: { ElMenu, ElMenuItem }
+}
+</script>
+
+<style scoped>
+.settings-container {
+  padding: 20px;
+}
+
+.header {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.main-content {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  margin-right: 20px;
+}
+
+.content {
+  flex: 1;
+}
+</style>

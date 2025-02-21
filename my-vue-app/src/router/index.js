@@ -13,21 +13,9 @@ const routes = [
   // 欢迎页模块（安装引导流程）
   {
     path: '/welcome',
-    component: () => import('../views/welcome/Main.vue'),
-    children: [
-      // 默认重定向到安装引导页
-      {
-        path: '', // 匹配 /welcome
-        name: 'WelcomeBase',
-        redirect: { name: 'WelcomeSetup' }
-      },
-      // 安装引导流程
-      {
-        path: 'setup', // 匹配 /welcome/setup
-        name: 'WelcomeSetup',
-        component: Steps
-      }
-    ]
+    name:'Welcome',
+    component: () => import('../views/welcome/Steps.vue'),
+    
   },
 
   // 数据监测模块（首页）
