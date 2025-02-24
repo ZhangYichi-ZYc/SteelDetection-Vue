@@ -95,7 +95,7 @@
             <p>请用微信扫码，扫描下方二维码</p>
             <div class="qr-code-container">
                 <!-- 二维码图片 -->
-                    <div class="qr-code">
+                <div class="qr-code">
                     <img src="../../assets/qr-code.png" alt="二维码">
                 </div>
 
@@ -118,9 +118,9 @@
             <!-- 协议勾选部分 -->
             <div class="form-group agreement-2">
                 <input type="checkbox" id="agree" v-model="agree">
-                <label for="agree">
-                <span style="color: #1A1A1A;">我已阅读并同意</span>
-                <span style="color: #0256FF;">《用户注册协议》</span>
+                <label >
+                  <span style="color: #1A1A1A;">我已阅读并同意</span>
+                  <span style="color: #0256FF;">《用户注册协议》</span>
                 </label>
             </div>
         </div>

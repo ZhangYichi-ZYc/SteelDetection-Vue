@@ -2,8 +2,11 @@
   <div class="setup-container">
     <!-- 新增欢迎页面（步骤0） -->
     <div v-if="currentStep === 0" class="welcome-card">
-      <h1>欢迎来到AutoVision</h1>
-      <p>接下来我将会帮助你完成设备安装配置</p>
+      <img src="../../assets/step0.png" alt="欢迎图片">
+      <div class="text">
+        <p>欢迎来到AutoVision</p>
+        <p>接下来我将会帮助你完成设备安装配置</p>
+      </div>
       <button class="primary" @click="nextStep">开始配置</button>
     </div>
 
@@ -117,25 +120,71 @@ export default {
 
 <style scoped>
 .setup-container {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #f5f7fa;
-  border-radius: 12px;
+ /* 垂直水平居中必备 */
+    display: flex;          /* 触发弹性布局 */
+    justify-content: center; /* 主轴对齐 */
+    align-items: center;    /* 交叉轴对齐 */
+    min-height: 100vh;      /* 保证容器撑满屏幕 */
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    opacity: 1;
+        
+    background:#0A0721;
+
+
+	
 }
 
 /* 新增欢迎页面样式 */
 .welcome-card {
   background: white;
-  padding: 3rem;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+position: absolute;
+left: 452px;
+top: 202px;
+width: 1016px;
+height: 687px;
+border-radius: 15px;
+opacity: 1;
+	
+background: #FFFFFF;
+	
+box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
+	
 }
-.welcome-card h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.welcome-card img{
+  position: absolute;
+left: 376px;
+top: 181px;
+width: 275px;
+height: 236px;
+opacity: 1;
+	
 }
+
+.text  {
+position: absolute;
+left: 183px;
+top: 460px;
+width: 660px;
+height: 117px;
+opacity: 1;
+	
+font-family: Source Han Sans;
+font-size: 33px;
+font-weight: normal;
+line-height: normal;
+text-align: center;
+letter-spacing: 0em;
+	
+font-variation-settings: "opsz" auto;
+font-feature-settings: "kern" on;
+color: #000000;
+line-height: 15px;
+	
+}
+
+
 .welcome-card button {
   margin-top: 2rem;
   padding: 1rem 3rem;
