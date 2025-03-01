@@ -63,7 +63,7 @@
       </div>
 
       <div class="action-buttons">
-        <el-icon :size="30" color="#1B7EF2" class="arrow-button" @click="nextStep">
+        <el-icon :size="30" color="#1B7EF2" class="arrow-button-1" @click="nextStep">
           <Right />
         </el-icon>
         <button @click="showSkipDialog = true">跳过</button>
@@ -78,17 +78,39 @@
         <div class="progress-bar" :style="{ width: progressWidth }"></div>
       </div>
       <h1 class="title">第二步：连接检测主机</h1>
-      <div class="content">
-        <img src="../../assets/step2.png" alt="连接示意图">
-        <div class="instructions">
-          <p>1. 使用USB3.0数据线连接设备</p>
-          <p>2. 确认主机识别到摄像头</p>
-          <p>3. 检查设备管理器中的连接状态</p>
+      <div class="content-1">
+        <img src="../../assets/step1.png" alt="安装示意图3">
+        <div class="instructions-1">
+          <p>使用数据线如图链接主机xxx
+            xxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+          </p>
+        </div>
+      </div>
+      <div class="content-2">
+        <img src="../../assets/step1.png" alt="安装示意图2">
+        <div class="instructions-2">
+          <p>在主机上选择对应的数据接口
+            xxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxx
+          </p>
+        </div>
+      </div>
+      <div class="content-3">
+        <img src="../../assets/step2-2.png" alt="安装示意图3">
+        <div class="instructions-3">
+          <p>这里有显示摄像头设备<br>
+                   则表示连接成功
+          </p>
         </div>
       </div>
       <div class="action-buttons">
-        <button @click="prevStep">上一步</button>
-        <button class="primary" @click="nextStep">下一步</button>
+        <el-icon :size="30" color=" #979979" class="arrow-button-pre" @click="prevStep">
+          <Back />
+        </el-icon>
+        <el-icon :size="30" color="#1B7EF2" class="arrow-button-next" @click="nextStep">
+          <Right />
+        </el-icon>
       </div>
     </div>
 
@@ -100,15 +122,24 @@
       </div>
       <h1 class="title">第三步：调试摄像头</h1>
       <div class="instructions">
-        <p>参考示意图调整角度：</p>
-        <div class="comparison">
-          <img src="../../assets/step3.png" alt="标准角度">
-          <img :src="currentCameraView" alt="当前视角">
+        <img src="../../assets/step1.png" alt="安装示意图3">
+        <div class="instructions1">
+          <p>正确的摄像头角度应该xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+你将你的摄像头所获取的图像和上图进行对比进行最后调试
+          </p>
         </div>
       </div>
+      <div class=blank>
+
+      </div>
       <div class="action-buttons">
-        <button @click="prevStep">上一步</button>
-        <button class="primary" @click="completeSetup">完成调试</button>
+        <el-icon :size="30" color=" #979979" class="arrow-button-pre" @click="prevStep">
+          <Back />
+        </el-icon>
+        <el-icon :size="30" color="#1B7EF2" class="arrow-button-next" @click="nextStep">
+          <Right />
+        </el-icon>
       </div>
     </div>
 
@@ -121,9 +152,9 @@
       </div>
       <img src="../../assets/step4.png" alt="结束图片">
       <div class="text-2">
-        <h1>🎉 安装完成!</h1>
-        <p>现在可以开始使用AutoVision进行智能检测</p>
-        <button class="primary" @click="gotoMonitoring">进入数据监测</button>
+        <p>恭喜你完成设备的安装，</p>
+        <p> 接下来进入我们的系统进行数据监测吧！</p>
+        <button class="primary" @click="gotoMonitoring">     start</button>
       </div>
     </div>
 
@@ -450,6 +481,20 @@ color: #000000;
   gap: 1rem;
   justify-content: flex-end;
 }
+ .action-buttons .arrow-button-1{
+    position: absolute;
+left: 886px;
+top: 637px;
+  cursor: pointer; /* 鼠标悬停时显示手型 */
+  transition: opacity 0.3s ease; /* 添加悬停效果 */
+  margin-top: 2px; /* 与文字间距 */
+ }
+
+
+
+.arrow-button:hover {
+  opacity: 0.8; /* 悬停时轻微透明 */
+}
 
 button {
 
@@ -472,7 +517,7 @@ font-feature-settings: "kern" on;
 color: #979797;
 }
 /* 箭头按钮样式 */
- .action-buttons .arrow-button {
+ .action-buttons .arrow-button-pre {
   position: absolute;
   left: 890px;
 top: 637px;
@@ -480,14 +525,116 @@ top: 637px;
   transition: opacity 0.3s ease; /* 添加悬停效果 */
   margin-top: 2px; /* 与文字间距 */
 }
+ .action-buttons .arrow-button-next{
+    position: absolute;
+left: 950px;
+top: 637px;
+  cursor: pointer; /* 鼠标悬停时显示手型 */
+  transition: opacity 0.3s ease; /* 添加悬停效果 */
+  margin-top: 2px; /* 与文字间距 */
+ }
+
+.instructions img{
+  position: absolute;
+left: 74px;
+top: 220px;
+width: 391px;
+height: 253px;
+opacity: 1;
+
+/* 自动布局 */
+display: flex;
+flex-direction: undefined;
+justify-content: undefined;
+align-items: undefined;
+padding: NaNpx;
+}
+.instructions1{
+  position: absolute;
+left: 74px;
+top: 496px;
+width: 391px;
+height: 106px;
+opacity: 1;
+	
+font-family: Source Han Sans;
+font-size: 20px;
+font-weight: normal;
+line-height: normal;
+text-align: center;
+letter-spacing: 0em;
+	
+font-variation-settings: "opsz" auto;
+font-feature-settings: "kern" on;
+color: #000000;
+	
+}
+.text-2  {
+position: absolute;
+left: 183px;
+top: 460px;
+width: 660px;
+height: 117px;
+opacity: 1;
+	
+font-family: Source Han Sans;
+font-size: 33px;
+font-weight: normal;
+line-height: normal;
+text-align: center;
+letter-spacing: 0em;
+	
+font-variation-settings: "opsz" auto;
+font-feature-settings: "kern" on;
+color: #000000;
+line-height: 15px;
+	
+}
+.blank{
+  position: absolute;
+left: 496px;
+top: 220px;
+width: 454px;
+height: 368px;
+border-radius: 15px;
+opacity: 1;
+	
+box-sizing: border-box;
+border: 1px solid #000000;
+	
+}
 
 .primary {
-  background: #1B7EF2;
-  color: white;
+position: absolute;
+left: 200px;
+top: 120px;
+width: 240px;
+height: 62px;
+border-radius: 10px;
+opacity: 1;
+	
+/* 自动布局 */
+display: flex;
+flex-direction: undefined;
+justify-content: undefined;
+align-items: undefined;
+padding: NaNpx;
+	
+/* LinearClaro */
+background: linear-gradient(104deg, #1B0852 -13%, #00F0FF 113%);
+
+
+font-family: Poppins;
+font-size: 27px;
+font-weight: bold;
+line-height: 43.2px;
+letter-spacing: 0px;
+
+color: #FFFFFF;
 }
 
 /* 新增结束页面样式 */
-.completion-card {
+.completion-card{
   background: white;
 position: absolute;
 left: 452px;
@@ -500,6 +647,15 @@ opacity: 1;
 background: #FFFFFF;
 	
 box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
+	
+}
+.completion-card img{
+  position: absolute;
+left: 376px;
+top: 181px;
+width: 275px;
+height: 236px;
+opacity: 1;
 	
 }
 
