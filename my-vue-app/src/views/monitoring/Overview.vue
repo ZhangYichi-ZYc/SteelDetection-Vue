@@ -1,15 +1,5 @@
 <template>
-  <div class="overview-container">
-    <!-- 顶部导航栏 -->
-    <header class="header">
-      <div class="header-left">
-        <span>数字车间零件质检平台</span>
-      </div>
-      <div class="header-right">
-        <span>{{ currentDateTime }}</span>
-        <el-avatar src="https://example.com/avatar.png" />
-      </div>
-    </header>
+
 
     <!-- 核心数据展示 -->
     <el-row :gutter="20" class="data-section">
@@ -87,7 +77,7 @@
         </el-card>
       </el-col>
     </el-row>
-  </div>
+
 </template>
 
 <script>

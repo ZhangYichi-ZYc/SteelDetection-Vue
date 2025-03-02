@@ -40,24 +40,24 @@
       <div class="content-1">
         <img src="../../assets/step1.png" alt="安装示意图1">
         <div class="instructions-1">
-          <p>先将摄像头xxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          <p>先将摄像头xxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxx
           </p>
         </div>
       </div>
       <div class="content-2">
         <img src="../../assets/step1.png" alt="安装示意图2">
         <div class="instructions-2">
-          <p>先将摄像头xxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          <p>先将摄像头xxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxx
           </p>
         </div>
       </div>
       <div class="content-3">
         <img src="../../assets/step1.png" alt="安装示意图3">
         <div class="instructions-3">
-          <p>先将摄像头xxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          <p>先将摄像头xxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxx
           </p>
         </div>
       </div>
@@ -124,9 +124,9 @@
       <div class="instructions">
         <img src="../../assets/step1.png" alt="安装示意图3">
         <div class="instructions1">
-          <p>正确的摄像头角度应该xxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-你将你的摄像头所获取的图像和上图进行对比进行最后调试
+          <p>正确的摄像头角度应该xxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            你将你的摄像头所获取的图像和上图进行对比进行最后调试
           </p>
         </div>
       </div>
@@ -154,7 +154,10 @@
       <div class="text-2">
         <p>恭喜你完成设备的安装，</p>
         <p> 接下来进入我们的系统进行数据监测吧！</p>
-        <button class="primary" @click="gotoMonitoring">     start</button>
+        <button class="primary" @click="gotoMonitoring">
+          <span>start</span>
+          <el-icon :size="20" style="margin-left: 8px" class="arrow"><Right /></el-icon>
+        </button>
       </div>
     </div>
 
@@ -186,7 +189,7 @@ export default {
       currentStep: 0,
       showSkipDialog: false,
       currentCameraView: import('../../assets/current-view.png'),
-      totalSteps: 4 // 总步骤数
+      totalSteps: 5 // 总步骤数
     }
   },
   computed: {
@@ -413,6 +416,10 @@ width: 293px;
 height: 106px;
 opacity: 1;
 	
+  text-align: center;
+  margin: 0 auto;
+  max-width: 80%;
+
 font-family: Source Han Sans;
 font-size: 20px;
 
@@ -440,6 +447,9 @@ top: 474px;
 width: 293px;
 height: 106px;
 opacity: 1;
+ text-align: center;
+  margin: 0 auto;
+  max-width: 80%;
 	
 font-family: Source Han Sans;
 font-size: 20px;
@@ -467,6 +477,10 @@ width: 293px;
 height: 106px;
 opacity: 1;
 	
+   text-align: center;
+  margin: 0 auto;
+  max-width: 80%;
+	
 font-family: Source Han Sans;
 font-size: 20px;
 
@@ -489,7 +503,25 @@ top: 637px;
   transition: opacity 0.3s ease; /* 添加悬停效果 */
   margin-top: 2px; /* 与文字间距 */
  }
+ .action-buttons .button{
+  position: absolute;
+left: 932px;
+top: 628px;
+width: 75px;
+height: 42px;
+opacity: 1;
+	
+font-family: Source Han Sans;
+font-size: 18px;
+font-weight: normal;
+line-height: 43.2px;
+text-align: center;
+letter-spacing: 0px;
+	
 
+
+	
+ }
 
 
 .arrow-button:hover {
@@ -556,6 +588,10 @@ top: 496px;
 width: 391px;
 height: 106px;
 opacity: 1;
+
+  text-align: center;
+  margin: 0 auto;
+  max-width: 80%;
 	
 font-family: Source Han Sans;
 font-size: 20px;
@@ -604,7 +640,7 @@ border: 1px solid #000000;
 	
 }
 
-.primary {
+.primary  {
 position: absolute;
 left: 200px;
 top: 120px;
@@ -612,6 +648,10 @@ width: 240px;
 height: 62px;
 border-radius: 10px;
 opacity: 1;
+
+  margin-top: 20px;
+  padding: 12px 40px;
+
 	
 /* 自动布局 */
 display: flex;
@@ -624,13 +664,48 @@ padding: NaNpx;
 background: linear-gradient(104deg, #1B0852 -13%, #00F0FF 113%);
 
 
+}
+.primary span{
+  position: absolute;
+left: 20px;
+top: 5px;
+width: 151.74px;
+height: 37.2px;
+opacity: 1;
+	
 font-family: Poppins;
 font-size: 27px;
 font-weight: bold;
 line-height: 43.2px;
 letter-spacing: 0px;
+	
+color: #FFFFFF;
+	
+}
+.arrow{
+position: absolute;
+left: 192px;
+top: 24px;
+width: 7.92%;
+height: 24.19%;
+opacity: 1;
+
+/* 自动布局 */
+display: flex;
+flex-direction: undefined;
+justify-content: undefined;
+align-items: undefined;
+padding: NaNpx;
+
+  cursor: pointer; /* 鼠标悬停时显示手型 */
+  transition: opacity 0.3s ease; /* 添加悬停效果 */
+  margin-top: 2px; /* 与文字间距 */
 
 color: #FFFFFF;
+
+	
+
+	
 }
 
 /* 新增结束页面样式 */
