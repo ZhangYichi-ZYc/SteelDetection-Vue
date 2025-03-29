@@ -73,7 +73,7 @@
               <span class="label">缺陷面积：</span>
               <span>{{ calculateArea(selectedDetection.bbox) }} cm²</span>
             </div>
-            <el-button
+            <!-- <el-button
               v-if="detections.length > 1"
               type="success"
               size="small"
@@ -88,6 +88,26 @@
               size="small"
               class="pass-button"
               @click="handleLastPass"
+            >
+              通过
+            </el-button>
+            <el-button
+              v-else
+              type="danger"
+              size="small"
+              class="defect-button"
+              @click="handleDefect"
+            >
+              缺陷
+            </el-button> -->
+            <!-- 修改按钮逻辑 -->
+            <el-button
+              v-if="detections.length > 0"
+              type="success"
+              size="small"
+              class="pass-button"
+              @click="handlePass"
+              :disabled="!selectedDetection"
             >
               通过
             </el-button>
@@ -121,7 +141,7 @@
             <div class="history-header">
               #{{ item.id }}
               <el-tag :type="item.detections.length > 0 ? 'danger' : 'success'">
-                {{ item.detections.length > 0 ? '复合' : '通过' }}
+                {{ getStatusText(item.detections) }}
               </el-tag>
             </div>
             <div class="history-info">
@@ -131,8 +151,23 @@
         </div>
       </div>
     </div>
+
+<!-- 确认对话框 -->
+<el-dialog
+  v-model:visible="showPrompt"
+  width="400px"
+  :before-close="closePrompt"
+>
+  <span>{{ promptMessage }}</span>
+  <template v-slot:footer>
+    <el-button @click="closePrompt">取消</el-button>
+    <el-button type="primary" @click="confirmOperation">确认</el-button>
+  </template>
+</el-dialog>
   </div>
+  
 </template>
+
 
 <script>
 import axios from 'axios'
@@ -144,8 +179,8 @@ export default {
       detections: [],
       detectionTime: null,
       selectedDetection: null,
-      historyItems: [], // 历史记录
-      currentDetectionId: 'A12348', // 当前检测编号
+      historyItems: [],
+      currentDetectionId: 'A12348',
       displayMetrics: {
         naturalWidth: 0,
         naturalHeight: 0,
@@ -153,97 +188,161 @@ export default {
         displayHeight: 0
       },
       showPrompt: false,
-      promptMessage: ''
+      promptMessage: '',
+      pendingAction: null
     }
   },
   methods: {
-    // 更新检测编号
-    updateDetectionId() {
-      // 提取编号中的数字部分并加一
-      const prefix = this.currentDetectionId.match(/[A-Za-z]+/)[0]; // 提取字母部分
-      const number = parseInt(this.currentDetectionId.match(/\d+/)[0]); // 提取数字部分
-      this.currentDetectionId = `${prefix}${number + 1}`; // 更新编号
-    },
-
-    // 点击“通过”按钮
     handlePass() {
-      if (!this.selectedDetection) return;
-
-      // 从 detections 中移除当前选中的检测
-      const index = this.detections.findIndex(
-        (detection) => detection === this.selectedDetection
-      );
-      if (index !== -1) {
-        this.detections.splice(index, 1);
+      if (!this.selectedDetection) {
+        this.$message.warning('请先点击要处理的缺陷区域')
+        return
       }
 
-      // 清空选中状态
-      this.selectedDetection = null;
+      this.showPrompt = true
+      this.promptMessage = this.detections.length > 1 
+        ? `系统检测出此处有${this.selectedDetection.class_name}缺陷，确认通过该检测项？`
+        : `系统检测出此处有${this.selectedDetection.class_name}缺陷，这是最后一个缺陷，确认通过吗？`
+      this.pendingAction = 'pass'
     },
 
-    // 点击“通过”按钮（最后一个缺陷）
-    handleLastPass() {
-      if (!this.selectedDetection) return;
-
-      // 从 detections 中移除当前选中的检测
-      const index = this.detections.findIndex(
-        (detection) => detection === this.selectedDetection
-      );
-      if (index !== -1) {
-        this.detections.splice(index, 1);
+    // // 更新检测编号
+    // updateDetectionId() {
+    //   const prefix = this.currentDetectionId.match(/[A-Za-z]+/)[0]
+    //   const number = parseInt(this.currentDetectionId.match(/\d+/)[0])
+    //   this.currentDetectionId = `${prefix}${number + 1}`
+    // },
+     // 修改更新ID方法
+    updateDetectionId() {
+      const match = this.currentDetectionId.match(/([A-Za-z]+)(\d+)/)
+      if (match) {
+        const prefix = match[1]
+        const number = parseInt(match[2]) + 1
+        this.currentDetectionId = `${prefix}${number.toString().padStart(3, '0')}`
       }
+    },
+    // 点击"通过"按钮（普通）
+    handlePass() {
+      if (!this.selectedDetection) return
 
-      // 显示提示框
-      this.showPrompt = true;
-      this.promptMessage = '所有缺陷已通过，检测完成！';
-
-      // 清空选中状态
-      this.selectedDetection = null;
-
-      // 更新检测编号
-      this.updateDetectionId();
+      const index = this.detections.findIndex(
+        detection => detection === this.selectedDetection
+      )
+      if (index !== -1) {
+        this.detections.splice(index, 1)
+      }
+      this.selectedDetection = null
+      this.saveToHistory()
     },
 
-    // 点击“缺陷”按钮
+        // 点击"通过"按钮（最后一个）
+    // handleLastPass() {
+    //   if (!this.selectedDetection) {
+    //     this.$message.warning('请先点击要处理的缺陷区域')
+    //     return
+    //   }
+      
+    //   this.showPrompt = true
+    //   this.promptMessage = `系统检测出此处有${this.selectedDetection.class_name}缺陷，您确定这个零件没有缺陷吗？`
+    //   this.pendingAction = 'lastPass'
+    // },
+
+    // 点击"缺陷"按钮
     handleDefect() {
-      if (!this.selectedDetection) return;
-
-      // 显示提示框
-      this.showPrompt = true;
-      this.promptMessage = `检测到缺陷：${this.selectedDetection.class_name}`;
+      this.showPrompt = true
+      this.promptMessage = `确认标记为${this.selectedDetection.class_name}缺陷？`
+      this.pendingAction = 'markDefect'
     },
 
-    // 点击图片标记为缺陷
+    // 确认操作
+    // 确认操作
+    // confirmOperation() {
+    //   if (this.pendingAction === 'lastPass') {
+    //     const index = this.detections.findIndex(
+    //       detection => detection === this.selectedDetection
+    //     )
+    //     if (index !== -1) {
+    //       this.detections.splice(index, 1)
+    //       this.selectedDetection = null  // 关键修复1
+    //       this.$nextTick(() => {
+    //         this.$forceUpdate()  // 关键修复2
+    //       })
+    //     }
+    //     this.saveToHistory()
+    //     this.$message.success('所有缺陷已通过，检测完成！')
+    //     this.updateDetectionId()
+    //   }
+    //   this.closePrompt()
+    // },
+
+        // 修改后的确认操作
+    confirmOperation() {
+      if (this.pendingAction === 'pass') {
+        const index = this.detections.findIndex(
+          detection => detection === this.selectedDetection
+        )
+        
+        if (index !== -1) {
+          this.detections.splice(index, 1)
+          
+          // 自动选择下一个缺陷（如果存在）
+          if (this.detections.length > 0) {
+            const newIndex = Math.min(index, this.detections.length - 1)
+            this.selectedDetection = this.detections[newIndex]
+          } else {
+            this.selectedDetection = null
+            this.updateDetectionId()
+            this.$message.success('所有缺陷已处理完成')
+          }
+          
+          // 强制更新视图
+          this.$nextTick(() => {
+            this.$forceUpdate()
+            this.saveToHistory()
+          })
+        }
+      }
+      this.closePrompt()
+    },
+
+    // 手动标记缺陷
     markDefect(event) {
-      if (!this.imageUrl) return;
+      if (!this.imageUrl) return
 
-      const img = this.$refs.detectionImage;
-      const rect = img.getBoundingClientRect();
+      const img = this.$refs.detectionImage
+      const rect = img.getBoundingClientRect()
+      const x = (event.clientX - rect.left) / rect.width
+      const y = (event.clientY - rect.top) / rect.height
 
-      // 计算点击位置相对于图片的比例
-      const x = (event.clientX - rect.left) / rect.width;
-      const y = (event.clientY - rect.top) / rect.height;
-
-      // 创建一个新的红框
       const newDetection = {
         bbox: [
-          x * this.displayMetrics.naturalWidth - 50, // 假设红框宽高为 100x100
+          x * this.displayMetrics.naturalWidth - 50,
           y * this.displayMetrics.naturalHeight - 50,
           x * this.displayMetrics.naturalWidth + 50,
           y * this.displayMetrics.naturalHeight + 50,
         ],
         class_name: '自定义缺陷',
         confidence: 0.99,
-        detection_id: `缺陷${this.detections.length + 1}`, // 动态生成编号
-      };
+        detection_id: `缺陷${this.detections.length + 1}`,
+      }
 
-      this.detections.push(newDetection);
-      this.selectedDetection = newDetection;
+      this.detections.push(newDetection)
+      this.selectedDetection = newDetection
+      this.saveToHistory()
+    },
+
+    // 状态显示逻辑
+    getStatusText(detections) {
+      if (detections.length === 0) return '通过'
+      if (detections.length === 1) return detections[0].class_name
+      const types = new Set(detections.map(d => d.class_name))
+      return types.size > 1 ? '复合' : `${detections[0].class_name}×${detections.length}`
     },
 
     // 关闭提示框
     closePrompt() {
-      this.showPrompt = false;
+      this.showPrompt = false
+      this.pendingAction = null
     },
 
     // 触发文件上传
@@ -251,27 +350,23 @@ export default {
       this.$refs.fileInput.click()
     },
 
-    // 上传文件并处理
+    // 处理文件上传
     async handleFileUpload(e) {
       const file = e.target.files[0]
       if (!file) return
 
-      // 显示预览图
       this.imageUrl = URL.createObjectURL(file)
       this.detectionTime = this.getCurrentTime()
 
-      // 上传到后端API
       const formData = new FormData()
       formData.append('file', file)
 
       try {
-        const response = await axios.post('https://autovision.zust.top/detect/image', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-
-        // 处理API响应
+        const response = await axios.post(
+          'https://autovision.zust.top/detect/image',
+          formData,
+          { headers: { 'Content-Type': 'multipart/form-data' } }
+        )
         this.handleApiResponse(response)
       } catch (error) {
         console.error('上传或检测失败:', error)
@@ -282,59 +377,49 @@ export default {
     // 处理API响应
     handleApiResponse(response) {
       if (response.data.status === 'success') {
-        // 确保 detections 存在且是数组
         if (response.data.detections && Array.isArray(response.data.detections)) {
           const classCount = {}
           this.detections = response.data.detections.map(detection => {
-            // 确保 detection 包含 class_name 属性
             if (detection.class_name) {
               const chineseName = this.getChineseClassName(detection.class_name)
               classCount[chineseName] = (classCount[chineseName] || 0) + 1
               return {
                 ...detection,
-                class_name: chineseName, // 类型名称（如“划痕”）
-                detection_id: `${chineseName}${classCount[chineseName]}` // 编号（如“划痕1”）
+                class_name: chineseName,
+                detection_id: `${chineseName}${classCount[chineseName]}`
               }
-            } else {
-              return detection // 如果 class_name 不存在，直接返回原数据
             }
+            return detection
           })
 
-          // 默认选择第一个检测结果
           if (this.detections.length > 0) {
             const randomIndex = Math.floor(Math.random() * this.detections.length)
             this.selectedDetection = this.detections[randomIndex]
           }
         } else {
-          console.error('API 返回的 detections 格式不正确:', response.data.detections)
-          this.$message.error('检测结果格式错误，请检查 API 返回数据！')
+          console.error('API返回数据格式错误:', response.data.detections)
+          this.$message.error('检测结果格式错误！')
         }
 
-        // 更新检测编号
-        this.updateDetectionId();
-
-        this.$nextTick(() => {
-          this.saveToHistory()
-        })
+        this.updateDetectionId()
+        this.$nextTick(() => this.saveToHistory())
       } else {
-        this.$message.error('检测失败，请检查图片或服务状态！')
+        this.$message.error('检测失败，请检查服务状态！')
       }
-      console.log('API 返回的 detections:', response.data.detections)
     },
 
-    // 类名中英文映射
+    // 类名翻译
     getChineseClassName(className) {
       const nameMap = {
         scratches: '划痕',
         inclusion: '凹陷',
         crack: '裂纹',
         rust: '锈蚀',
-        // 添加更多映射...
       }
       return nameMap[className] || className
     },
 
-    // 图片加载完成处理
+    // 图片加载处理
     handleImageLoad() {
       const img = this.$refs.detectionImage
       if (img) {
@@ -345,28 +430,20 @@ export default {
           displayHeight: img.offsetHeight
         }
       }
-      console.log('Image Metrics:', this.displayMetrics);
     },
 
+    // 红框定位计算
     getBoxStyle(bbox) {
-      if (!this.displayMetrics.naturalWidth || !this.displayMetrics.naturalHeight) return {};
+      if (!this.displayMetrics.naturalWidth) return {}
+      const [x1, y1, x2, y2] = bbox
+      const img = this.$refs.detectionImage
+      const container = img.parentElement
+      
+      const scaleX = img.offsetWidth / img.naturalWidth
+      const scaleY = img.offsetHeight / img.naturalHeight
+      const offsetX = img.getBoundingClientRect().left - container.getBoundingClientRect().left
+      const offsetY = img.getBoundingClientRect().top - container.getBoundingClientRect().top
 
-      const [x1, y1, x2, y2] = bbox;
-
-      // 计算缩放比例
-      const scaleX = this.displayMetrics.displayWidth / this.displayMetrics.naturalWidth;
-      const scaleY = this.displayMetrics.displayHeight / this.displayMetrics.naturalHeight;
-
-      // 获取图片相对于父容器的偏移量
-      const img = this.$refs.detectionImage;
-      const container = img.parentElement; // 父容器
-      const containerRect = container.getBoundingClientRect();
-      const imgRect = img.getBoundingClientRect();
-
-      const offsetX = imgRect.left - containerRect.left; // 图片左边距相对于容器的偏移
-      const offsetY = imgRect.top - containerRect.top;   // 图片顶部相对于容器的偏移
-
-      // 计算红框的样式
       return {
         left: `${x1 * scaleX + offsetX}px`,
         top: `${y1 * scaleY + offsetY}px`,
@@ -374,21 +451,24 @@ export default {
         height: `${(y2 - y1) * scaleY}px`,
         position: 'absolute',
         border: '2px solid #FF3B30',
-        boxSizing: 'border-box',
-      };
+        boxSizing: 'border-box'
+      }
     },
 
+    // 格式化坐标显示
     formatBbox(bbox) {
       const [x1, y1, x2, y2] = bbox
-      return `X:${x1}-${x2} Y:${y1}-${y2}`
+      return `X:${x1.toFixed(0)}-${x2.toFixed(0)} Y:${y1.toFixed(0)}-${y2.toFixed(0)}`
     },
 
+    // 计算缺陷面积
     calculateArea(bbox) {
       const [x1, y1, x2, y2] = bbox
       const pixelArea = (x2 - x1) * (y2 - y1)
       return (pixelArea * 0.0007).toFixed(2)
     },
 
+    // 获取当前时间
     getCurrentTime() {
       return new Date().toLocaleString('zh-CN', {
         year: 'numeric',
@@ -400,16 +480,40 @@ export default {
       }).replace(/\//g, '-')
     },
 
+    // // 保存到历史记录
+    // saveToHistory() {
+    //   const existing = this.historyItems.find(item => item.id === this.currentDetectionId)
+    //   if (existing) {
+    //     existing.detections = [...this.detections]
+    //     existing.timestamp = Date.now()
+    //   } else {
+    //     this.historyItems.unshift({
+    //       id: this.currentDetectionId,
+    //       thumb: this.imageUrl,
+    //       fullImage: this.imageUrl,
+    //       detections: [...this.detections],
+    //       timestamp: Date.now()
+    //     })
+    //   }
+    // },
+        // 修改保存历史记录方法
     saveToHistory() {
-      this.historyItems.unshift({
-        id: this.currentDetectionId, // 使用当前检测编号
+      const existing = this.historyItems.find(item => item.id === this.currentDetectionId)
+      const record = {
+        id: this.currentDetectionId,
         thumb: this.imageUrl,
         fullImage: this.imageUrl,
-        detections: [...this.detections],
+        detections: JSON.parse(JSON.stringify(this.detections)), // 深拷贝
         timestamp: Date.now()
-      })
-    },
+      }
 
+      if (existing) {
+        Object.assign(existing, record)
+      } else {
+        this.historyItems.unshift(record)
+      }
+    },
+    // 选择检测结果
     selectDetection(detection) {
       this.selectedDetection = detection
     }
@@ -472,11 +576,37 @@ export default {
   overflow: visible; /* 确保内容不会被裁剪 */
 }
 
+
+/* 新增按钮禁用样式 */
+.pass-button:disabled {
+  background: #e0e0e0 !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .detection-box {
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  border: 2px solid #FF3B30;
+}
+
+.detection-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(255, 59, 48, 0.3);
+}
+
+.detection-box.active {
+  border-width: 3px;
+  z-index: 100;
+  border-color: #FF0000;
+}
+
+
+
+/* .detection-box {
   position: absolute;
   box-shadow: 0 0 10px rgba(255, 59, 48, 0.5);
   cursor: pointer;
-}
+} */
 
 .detection-label {
   position: absolute;

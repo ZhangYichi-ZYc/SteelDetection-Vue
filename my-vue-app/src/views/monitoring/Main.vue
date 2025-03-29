@@ -30,7 +30,7 @@
             <span class="time">{{ timeStr }}</span>
           </div>
         </div>
-        <el-avatar :src="userAvatar" size="medium" />
+        <el-avatar :src="userAvatar" size="default" />
       </div>
     </header>
 
