@@ -680,7 +680,7 @@ mounted() {
   },
     handleTimeRangeChange() {
       console.log('Selected time range:', this.timeRange);
-      this.timeRange = this.timeRangeInspection;
+      // this.timeRange = this.timeRangeInspection;
       axios.get('/api/defective-parts', { params: { timeRange: this.timeRange } })
        .then(response => {
           this.defectivePartsData = response.data;
@@ -724,11 +724,13 @@ mounted() {
   height: 100vh;
   padding: 16px;
   color: #fff;
+  position: relative; /* 新增 */
 }
 /* 新增标题样式 */
 .header-title {
-  position: fixed;
-  top: 120px;
+    position: absolute; /* 改为绝对定位 */
+  /* position: fixed; */
+  top:0px;
   left: 50%;
   transform: translateX(-50%);
   letter-spacing: 8px; /* 新增字符间距 */

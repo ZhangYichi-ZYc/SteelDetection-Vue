@@ -1,0 +1,102 @@
+# Vue 项目结构规则
+
+# 项目类型定义
+{
+  "projectType": "vue",
+  "projectStructure": "vite-vue3"
+}
+
+# 路径别名和重要文件映射
+{
+  "pathAlias": {
+    "@": "my-vue-app/src",
+    "@components": "my-vue-app/src/components",
+    "@views": "my-vue-app/src/views",
+    "@assets": "my-vue-app/src/assets",
+    "@api": "my-vue-app/src/api"
+  }
+}
+
+# 主要模块关系映射
+{
+  "moduleRelations": {
+    "monitoring": {
+      "description": "缺陷监控模块，负责图像上传和缺陷检测",
+      "files": ["my-vue-app/src/views/monitoring/Upload.vue"],
+      "api": ["detect/image"]
+    },
+    "analysis": {
+      "description": "数据分析模块",
+      "files": ["my-vue-app/src/views/analysis"]
+    },
+    "report": {
+      "description": "报告模块",
+      "files": ["my-vue-app/src/views/report"]
+    },
+    "settings": {
+      "description": "系统设置模块",
+      "files": ["my-vue-app/src/views/settings"]
+    }
+  }
+}
+
+# API 端点映射
+{
+  "apiEndpoints": {
+    "baseURL": "https://autovision.zust.top",
+    "endpoints": {
+      "detect/image": {
+        "method": "POST",
+        "description": "图像缺陷检测API",
+        "requestFormat": "multipart/form-data",
+        "responseFormat": {
+          "status": "string",
+          "detections": "array",
+          "detected_count": "number"
+        }
+      }
+    }
+  }
+}
+
+# 组件依赖关系
+{
+  "componentDependencies": {
+    "Element-Plus": {
+      "version": "^2.9.5",
+      "components": ["el-button", "el-dialog", "el-tag"]
+    },
+    "ECharts": {
+      "version": "^5.6.0",
+      "components": ["vue-echarts"]
+    }
+  }
+}
+
+# 项目功能描述
+{
+  "functionalDescription": {
+    "purpose": "工业缺陷检测系统",
+    "mainFeatures": [
+      "图像上传与缺陷检测",
+      "缺陷分类与标记",
+      "检测结果历史记录",
+      "数据分析与报告生成"
+    ],
+    "domain": "工业质量控制"
+  }
+}
+
+# 指定特殊文件规则
+{
+  "specialFileRules": {
+    "my-vue-app/src/views/monitoring/Upload.vue": {
+      "description": "缺陷检测上传组件",
+      "keyFunctions": [
+        "handleFileUpload",
+        "handleApiResponse",
+        "saveToHistory"
+      ]
+    }
+  }
+} 

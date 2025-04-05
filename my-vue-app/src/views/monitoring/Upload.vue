@@ -355,8 +355,16 @@ export default {
       const file = e.target.files[0]
       if (!file) return
 
-      this.imageUrl = URL.createObjectURL(file)
-      this.detectionTime = this.getCurrentTime()
+      // 清空先前的检测结果
+      this.imageUrl = null
+      this.detections = []
+      this.selectedDetection = null
+      
+      // 然后设置新图片
+      this.$nextTick(() => {
+        this.imageUrl = URL.createObjectURL(file)
+        this.detectionTime = this.getCurrentTime()
+      })
 
       const formData = new FormData()
       formData.append('file', file)
@@ -377,7 +385,11 @@ export default {
     // 处理API响应
     handleApiResponse(response) {
       if (response.data.status === 'success') {
-        if (response.data.detections && Array.isArray(response.data.detections)) {
+        // 首先清空之前的检测结果
+        this.detections = []
+        this.selectedDetection = null
+        
+        if (response.data.detections && Array.isArray(response.data.detections) && response.data.detections.length > 0) {
           const classCount = {}
           this.detections = response.data.detections.map(detection => {
             if (detection.class_name) {
@@ -397,8 +409,9 @@ export default {
             this.selectedDetection = this.detections[randomIndex]
           }
         } else {
-          console.error('API返回数据格式错误:', response.data.detections)
-          this.$message.error('检测结果格式错误！')
+          console.log('无缺陷检测结果')
+          // 确保selectedDetection为null，表示无缺陷
+          this.selectedDetection = null
         }
 
         this.updateDetectionId()
