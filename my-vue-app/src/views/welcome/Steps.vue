@@ -40,8 +40,7 @@
       <div class="content-1">
         <img src="../../assets/step1.png" alt="安装示意图1">
         <div class="instructions-1">
-          <p>先将摄像头xxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          <p>先将摄像头主体轻放于流水线检测环节的安装支架上，对齐预设孔位
           </p>
         </div>
       </div>

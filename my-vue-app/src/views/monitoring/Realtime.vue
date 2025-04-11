@@ -179,7 +179,7 @@ export default {
       pendingAction: null,
       captureTimer: null,
       isCapturing: false,
-      screenshotInterval: 1000, // 默认1秒
+      screenshotInterval: 1000, // 默认3秒
       screenshotCount: 0
     }
   },
@@ -613,7 +613,7 @@ export default {
 .control-buttons {
   position: absolute;
   bottom: 30px;
-  left: 50%;
+  left: 40%;
   transform: translateX(-50%);
   display: flex;
   justify-content: center;

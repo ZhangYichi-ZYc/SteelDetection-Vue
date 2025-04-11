@@ -838,14 +838,15 @@ font-size: 54px;
   color: #1B7EF2 !important;
 }
 
-.el-table {
+::v-deep .el-table {
   position: relative;
   width: 100%;
   margin-top: 20px;
+  
 }
 ::v-deep(.el-table .cell ){
     box-sizing: border-box;
-    line-height: 23px;
+    line-height: 45px;
     overflow: hidden;
     overflow-wrap: break-word;
     padding: 0 12px;
@@ -859,14 +860,15 @@ font-size: 54px;
       line-height: 1.2; /* 确保行高与字体大小成比例 */
   padding: 8px; 
 }
-.el-table {
+::v-deep .el-table {
       height: 81%; /* 表格高度占满父容器 */
   background: #1a2238; /* 设置背景颜色，避免出现白色部分 */
 }
 
-.el-table__inner-wrapper {
+::v-deep .el-table__inner-wrapper {
   height: 100%; /* 确保内部 wrapper 的高度也占满父容器 */
   background: inherit; /* 继承背景颜色 */
+  
 }
 
 .stat-item{
@@ -1048,7 +1050,7 @@ position: absolute;
 }
 
 .table-card :deep(.el-table__cell) {
-  padding: 8px 0;
+  padding: 10px 0;
 }
 
 
