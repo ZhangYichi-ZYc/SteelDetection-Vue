@@ -38,25 +38,23 @@
       </div>
       <h1 class="title">第一步：按照图示安装好配套的摄像头至你的流水线的检测环节</h1>
       <div class="content-1">
-        <img src="../../assets/step1.png" alt="安装示意图1">
+        <img src="../../assets/摄像头安装流程 (3).png" alt="安装示意图1">
         <div class="instructions-1">
           <p>先将摄像头主体轻放于流水线检测环节的安装支架上，对齐预设孔位
           </p>
         </div>
       </div>
       <div class="content-2">
-        <img src="../../assets/step1.png" alt="安装示意图2">
+        <img src="../../assets/摄像头安装流程 (1).png" alt="安装示意图2">
         <div class="instructions-2">
-          <p>先将摄像头xxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          <p>逐步拧紧摄像头固定螺丝，确保其在检测环节位置稳固不晃动
           </p>
         </div>
       </div>
       <div class="content-3">
-        <img src="../../assets/step1.png" alt="安装示意图3">
+        <img src="../../assets/摄像头安装流程 (5).png" alt="安装示意图3">
         <div class="instructions-3">
-          <p>先将摄像头xxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          <p>微调摄像头拍摄角度，使其正对流水线检测区域，完成基础安装
           </p>
         </div>
       </div>
@@ -78,20 +76,16 @@
       </div>
       <h1 class="title">第二步：连接检测主机</h1>
       <div class="content-1">
-        <img src="../../assets/step1.png" alt="安装示意图3">
+        <img src="../../assets/摄像头安装流程 (6).png" alt="安装示意图3">
         <div class="instructions-1">
-          <p>使用数据线如图链接主机xxx
-            xxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxx
+          <p>取一根适配的数据线，一端插入摄像头预留的数据接口，确保插紧
           </p>
         </div>
       </div>
       <div class="content-2">
-        <img src="../../assets/step1.png" alt="安装示意图2">
+        <img src="../../assets/摄像头安装流程 (7).png" alt="安装示意图2">
         <div class="instructions-2">
-          <p>在主机上选择对应的数据接口
-            xxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxx
+          <p>找到检测主机的数据接口面板，将数据线的另一端准确插入对应的接口，接口通常有标识
           </p>
         </div>
       </div>
@@ -121,16 +115,23 @@
       </div>
       <h1 class="title">第三步：调试摄像头</h1>
       <div class="instructions">
-        <img src="../../assets/step1.png" alt="安装示意图3">
+        <img src="../../assets/摄像头安装流程 (8).png" alt="安装示意图3">
         <div class="instructions1">
-          <p>正确的摄像头角度应该xxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            你将你的摄像头所获取的图像和上图进行对比进行最后调试
+          <p>通过检测主机界面，查看摄像头实时车间流水线画面。微调摄像头俯仰角和水平转角，确保画面中流水线物品完整、无遮挡，且位于画面中心区域
           </p>
         </div>
       </div>
-      <div class=blank>
-
+      <div class="video-preview">
+        <video
+          ref="demoVideo"
+          class="preview-video"
+          autoplay
+          loop
+          muted
+        >
+          <source src="../../assets/WeChat_20250406202831.mp4" type="video/mp4">
+          您的浏览器不支持视频播放
+        </video>
       </div>
       <div class="action-buttons">
         <el-icon :size="30" color=" #979979" class="arrow-button-pre" @click="prevStep">
@@ -165,7 +166,7 @@
       <div class="dialog">
         <p>安装后才可进行零件的实时监测，</p>
         <p>您确定跳过摄像头安装教学吗？</p>
-        <p>可在“系统设置”中学习摄像头安装流程。</p>
+        <p>可在"系统设置"中学习摄像头安装流程。</p>
         <div class="dialog-buttons">
           <button class="warning" @click="skipInstallation">确认</button>
           <button class="yes" @click="showSkipDialog = false">取消</button>
@@ -188,7 +189,8 @@ export default {
       currentStep: 0,
       showSkipDialog: false,
       currentCameraView: import('../../assets/current-view.png'),
-      totalSteps: 5 // 总步骤数
+      totalSteps: 5, // 总步骤数
+      videoLoaded: false
     }
   },
   computed: {
@@ -216,11 +218,19 @@ export default {
     },
 
     mounted() {
-  console.log('当前路由信息:', {
-    path: this.$route.path,
-    matched: this.$route.matched.map(r => r.path)
-  })
-}
+      console.log('当前路由信息:', {
+        path: this.$route.path,
+        matched: this.$route.matched.map(r => r.path)
+      })
+      
+      // 监听视频加载完成
+      const video = this.$refs.demoVideo
+      if (video) {
+        video.addEventListener('loadeddata', () => {
+          this.videoLoaded = true
+        })
+      }
+    }
   }
 }
 </script>
@@ -831,4 +841,20 @@ background: #1B7EF2;
   transform: translateY(-5px);
 }
 
+.video-preview {
+  position: absolute;
+  left: 496px;
+  top: 220px;
+  width: 454px;
+  height: 368px;
+  border-radius: 15px;
+  overflow: hidden;
+  background: #000;
+}
+
+.preview-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 </style>

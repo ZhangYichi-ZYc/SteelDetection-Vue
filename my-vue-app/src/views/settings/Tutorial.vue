@@ -1,12 +1,27 @@
 <template>
   <div class="tutorial-container">
-    <h2>连接教程</h2>
-    <p>这里是连接教程页面。</p>
+    <img src="../../assets/屏幕截图 2025-04-11 144120(1).png" alt="教程图片" class="full-image">
   </div>
 </template>
 
+<script>
+export default {
+  name: 'Tutorial'
+}
+</script>
+
 <style scoped>
 .tutorial-container {
-  padding: 2rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.full-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

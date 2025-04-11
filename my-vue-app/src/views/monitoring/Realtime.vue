@@ -2,33 +2,19 @@
   <div class="upload-container">
     <!-- 上半部分 -->
     <div class="top-section">
-      <!-- 上传区域 - 视频播放区 -->
-      <div class="upload-area" @click="triggerFileUpload">
-        <input
-          type="file"
-          ref="fileInput"
-          accept="video/*"
-          @change="handleVideoUpload"
-          style="display: none"
-        />
-        <div v-if="!videoUrl" class="upload-prompt">
-          <i class="el-icon-upload">
-            <img src="..\..\assets\upload1.png" alt="上传图标" class="upload-icon" />
-          </i>
-          <div class="upload-text">点击上传视频</div>
-        </div>
-        <div v-else class="preview-container">
-          <video
-            ref="videoPlayer"
-            class="preview-video"
-            controls
-            autoplay
-            @loadeddata="handleVideoLoaded"
-          >
-            <source :src="videoUrl" type="video/mp4">
-            您的浏览器不支持视频播放
-          </video>
-        </div>
+      <!-- 视频播放区 -->
+      <div class="upload-area">
+        <video
+          ref="videoPlayer"
+          class="preview-video"
+          autoplay
+          loop
+          muted
+          @loadeddata="handleVideoLoaded"
+        >
+          <source src="../../assets/WeChat_20250406202831.mp4" type="video/mp4">
+          您的浏览器不支持视频播放
+        </video>
       </div>
 
       <!-- 检测区域 -->
@@ -160,7 +146,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      videoUrl: null,
+      videoUrl: '../../assets/WeChat_20250406202831.mp4',
       currentScreenshot: null,
       detections: [],
       detectionTime: null,
@@ -179,12 +165,15 @@ export default {
       pendingAction: null,
       captureTimer: null,
       isCapturing: false,
-      screenshotInterval: 1000, // 默认3秒
+      screenshotInterval: 1000,
       screenshotCount: 0
     }
   },
   mounted() {
-    // 组件挂载时，初始化相关操作
+    // 组件挂载时自动开始检测
+    this.$nextTick(() => {
+      this.startScreenshotCapture();
+    });
   },
   beforeUnmount() {
     // 组件销毁前，清理定时器
@@ -291,40 +280,6 @@ export default {
       if (video) {
         this.$message.success('视频已加载，可以开始截图检测');
       }
-    },
-    
-    // 触发文件上传
-    triggerFileUpload() {
-      if (this.isCapturing) {
-        this.$message.warning('请先停止当前检测');
-        return;
-      }
-      this.$refs.fileInput.click();
-    },
-    
-    // 处理视频上传
-    async handleVideoUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      
-      // 检查文件类型
-      if (!file.type.startsWith('video/')) {
-        this.$message.error('请上传视频文件');
-        return;
-      }
-      
-      // 清空先前的数据
-      this.stopScreenshotCapture();
-      this.videoUrl = null;
-      this.currentScreenshot = null;
-      this.detections = [];
-      this.selectedDetection = null;
-      
-      // 设置新视频URL
-      this.$nextTick(() => {
-        this.videoUrl = URL.createObjectURL(file);
-        this.$message.success('视频已上传，请点击"开始检测"按钮进行检测');
-      });
     },
     
     // 处理API响应 - 从Upload.vue复用，但有调整
