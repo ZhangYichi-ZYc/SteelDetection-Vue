@@ -48,14 +48,14 @@
           style="width: 100%"
         />
       </el-col>
-      <el-col :span="4">
-        <el-select v-model="lineFilter" placeholder="生产线筛选">
+      <el-col :span="6">
+        <el-select v-model="lineFilter" placeholder="全部生产线" style="width: 100%">
           <el-option label="全部生产线" value="all" />
           <el-option v-for="line in productionLines" :key="line" :label="line" :value="line" />
         </el-select>
       </el-col>
-      <el-col :span="4" class="report-button">
-        <el-button type="primary" icon="el-icon-plus">生成报告</el-button>
+      <el-col :span="4">
+        <el-button type="primary" icon="Plus">生成报告</el-button>
       </el-col>
     </el-row>
 
@@ -116,10 +116,10 @@
             {{ row.status }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="180">
+        <el-table-column label="操作" width="200" fixed="right">
           <template #default>
-            <el-button type="primary" size="small">查看详情</el-button>
-            <el-button type="success" size="small">导出报告</el-button>
+            <el-button type="primary" size="small" link>查看详情</el-button>
+            <el-button type="success" size="small" link>导出报告</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -399,22 +399,22 @@ export default {
   
   /* 调整表格行高 */
   .el-table__row {
-    height: 20px !important;
+    height: 22px !important;
   }
 
   /* 调整单元格内边距和对齐方式 */
   .el-table__cell {
-    padding: 0 !important;
-    height: 20px !important;
-    line-height: 20px !important;
+    padding: 2px 0 !important;
+    height: 22px !important;
+    line-height: 22px !important;
   }
 
   th.el-table__cell {
     background: white;
     color: var(--text-color);
     font-weight: 500;
-    height: 20px !important;
-    padding: 0 !important;
+    height: 22px !important;
+    padding: 2px 0 !important;
   }
 
   td.el-table__cell {
@@ -424,11 +424,19 @@ export default {
 
   /* 调整单元格内容对齐 */
   .cell {
-    line-height: 20px !important;
-    padding: 0 8px !important;
+    line-height: 18px !important;
+    padding: 2px 8px !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  /* 调整操作列按钮的样式 */
+  .el-button--link {
+    height: 24px !important;
+    padding: 0 8px !important;
+    margin: 0 4px !important;
+    font-size: 12px !important;
   }
 }
 
@@ -439,11 +447,17 @@ export default {
   margin-top: 20px;
   border: 1px solid var(--border-color);
   box-shadow: 0 2px 12px 0 var(--shadow-color);
-  margin-bottom: 60px; /* 为AI搜索球留出空间 */
+  margin-bottom: 60px;
+
+  :deep(.el-table__header-wrapper) {
+    th.el-table__cell {
+      background-color: #f5f7fa !important;
+    }
+  }
 
   /* 控制表格容器高度 */
   :deep(.el-table__body-wrapper) {
-    max-height: 300px !important; /* 限制表格体最大高度 */
+    max-height: 400px !important;
     overflow-y: auto;
   }
 }
@@ -452,7 +466,7 @@ export default {
 .top-bar {
   margin-bottom: 20px;
   display: flex;
-  gap: 20px; /* 添加组件之间的间距 */
+  gap: 20px;
   align-items: center;
   
   .el-col {
@@ -463,27 +477,6 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-
-    /* 调整搜索框列宽 */
-    &:first-child {
-      flex: 0 0 250px;
-    }
-
-    /* 调整日期选择器列宽 */
-    &:nth-child(2) {
-      flex: 0 0 350px;
-    }
-
-    /* 调整生产线筛选列宽 */
-    &:nth-child(3) {
-      flex: 0 0 200px;
-    }
-
-    /* 调整生成报告按钮列宽 */
-    &:last-child {
-      flex: 0 0 120px;
-      justify-content: center;
-    }
   }
 
   :deep(.el-input__wrapper),
@@ -494,21 +487,9 @@ export default {
     width: 100%;
   }
 
-  :deep(.el-input__inner) {
-    color: var(--text-color);
-  }
-
   :deep(.el-button) {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: white;
-    height: 32px;
     width: 100%;
-  }
-
-  /* 移除原有的栅格间距 */
-  :deep(.el-row--flex) {
-    margin: 0 !important;
+    justify-content: center;
   }
 }
 
