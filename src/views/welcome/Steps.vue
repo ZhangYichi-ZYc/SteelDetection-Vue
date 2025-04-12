@@ -40,21 +40,21 @@
       <div class="content-1">
         <img src="../../assets/摄像头安装流程 (3).png" alt="安装示意图1">
         <div class="instructions-1">
-          <p style="left-align;">先将摄像头主体轻放于流水线检测环节的安装支架上，对齐预设孔位
+          <p style="text-align: left">先将摄像头主体轻放于流水线检测环节的安装支架上，对齐预设孔位
           </p>
         </div>
       </div>
       <div class="content-2">
         <img src="../../assets/摄像头安装流程 (1).png" alt="安装示意图2">
         <div class="instructions-2">
-          <p>逐步拧紧摄像头固定螺丝，确保其在检测环节位置稳固不晃动
+          <p style="text-align: left">逐步拧紧摄像头固定螺丝，确保其在检测环节位置稳固不晃动
           </p>
         </div>
       </div>
       <div class="content-3">
         <img src="../../assets/摄像头安装流程 (5).png" alt="安装示意图3">
         <div class="instructions-3">
-          <p>微调摄像头拍摄角度，使其正对流水线检测区域，完成基础安装
+          <p style="text-align: left">微调摄像头拍摄角度，使其正对流水线检测区域，完成基础安装
           </p>
         </div>
       </div>
@@ -78,21 +78,21 @@
       <div class="content-1">
         <img src="../../assets/摄像头安装流程 (6).png" alt="安装示意图3">
         <div class="instructions-1">
-          <p>取一根适配的数据线，一端插入摄像头预留的数据接口，确保插紧
+          <p style="text-align: left">取一根适配的数据线，一端插入摄像头预留的数据接口，确保插紧
           </p>
         </div>
       </div>
       <div class="content-2">
         <img src="../../assets/摄像头安装流程 (7).png" alt="安装示意图2">
         <div class="instructions-2">
-          <p>找到检测主机的数据接口面板，将数据线的另一端准确插入对应的接口，接口通常有标识
+          <p style="text-align: left">找到检测主机的数据接口面板，将数据线的另一端准确插入对应的接口，接口通常有标识
           </p>
         </div>
       </div>
       <div class="content-3">
         <img src="../../assets/step2-2.png" alt="安装示意图3">
         <div class="instructions-3">
-          <p>这里有显示摄像头设备<br>
+          <p style="text-align: left">这里有显示摄像头设备
                    则表示连接成功
           </p>
         </div>
@@ -117,7 +117,7 @@
       <div class="instructions">
         <img src="../../assets/摄像头安装流程 (8).png" alt="安装示意图3">
         <div class="instructions1">
-          <p>通过检测主机界面，查看摄像头实时车间流水线画面。微调摄像头俯仰角和水平转角，确保画面中流水线物品完整、无遮挡，且位于画面中心区域
+          <p style="text-align: left">通过检测主机界面，查看摄像头实时车间流水线画面。微调摄像头俯仰角和水平转角，确保画面中流水线物品完整、无遮挡，且位于画面中心区域
           </p>
         </div>
       </div>

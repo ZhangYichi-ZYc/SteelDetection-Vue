@@ -22,7 +22,11 @@
           :default-active="activeMenu"
           class="nav-menu"
           @select="handleMenuSelect"
-        >
+        > 
+          <el-menu-item index="/monitoring/settings/ai">
+            <el-icon><chat-dot-round /></el-icon>
+            <span>AI对话</span>
+          </el-menu-item>
           <el-menu-item index="/monitoring/settings/tutorial">
             <template #title>
               <el-icon><connection /></el-icon>
@@ -41,6 +45,7 @@
             <el-icon><question-filled /></el-icon>
             <span>常见问题</span>
           </el-menu-item>
+          
         </el-menu>
       </el-aside>
 
@@ -67,7 +72,8 @@ import {
   Connection,
   Cpu,
   ShoppingCart,
-  QuestionFilled
+  QuestionFilled,
+  ChatDotRound
 } from '@element-plus/icons-vue'
 
 const userId = ref('DET-20230001')

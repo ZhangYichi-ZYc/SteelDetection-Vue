@@ -3,7 +3,7 @@
     <!-- AI 对话组件 -->
     <div class="ai-chat-container" :class="{ 'expanded': isChatExpanded }">
       <div class="chat-header" v-if="isChatExpanded">
-        <span>AI 助手</span>
+        <span>AI助手</span>
         <el-button type="text" @click="toggleChat">
           <el-icon><Close /></el-icon>
         </el-button>
@@ -265,7 +265,34 @@ export default {
           messages: [
             { 
               role: 'system', 
-              content: '你是一个专业的工业缺陷检测助手，可以帮助用户分析生产数据、解释检测结果、提供改进建议。请用专业但易懂的语言回答用户的问题。'
+              content: `你是一个专业的工业缺陷检测助手，可以帮助用户分析生产数据、解释检测结果、提供改进建议。请用专业但易懂的语言回答用户的问题。
+
+当前系统数据如下：
+
+1. 生产线数据：
+   - 5条生产线：流水线1-5
+   - 每条生产线都有具体的生产批次、产量和合格率数据
+
+2. 检测数据：
+   - 实际完成检测：23834件
+   - 未完成检测：14131件
+   - 合格率分布：合格(1048)、待复检(100)、不合格(50)
+
+3. 设备运行状态：
+   - A线：95%
+   - B线：98%
+   - C线：97%
+   - D线：96%
+
+4. 生产效率趋势：
+   - 时间点：10:00-15:00
+   - 效率值：80-100%
+
+5. 历史记录数据：
+   - 包含时间、生产线、批次、产量、合格率、状态等信息
+   - 状态分为：正常、待优化、异常
+
+请基于这些数据，为用户提供有关生产效率、质量检测、设备运行状态和历史记录的分析和建议。`
             },
             ...this.chatMessages.map(msg => ({
               role: msg.role,
@@ -580,21 +607,24 @@ export default {
   font-size: 24px;
 }
 
-.ai-chat-container.expanded {
-  background: white;
+:deep(.ai-chat-container.expanded ){
+  background:rgb(35, 49, 70)!important; /* 调整背景颜色以区分主背景 */
   border: 1px solid var(--border-color);
   border-radius: 8px;
   box-shadow: 0 2px 12px 0 var(--shadow-color);
+  max-height: 80vh; /* 允许大小可调节 */
+  overflow-y: auto;
 
   .chat-header {
-    background: white;
+    background: rgb(65, 100, 148)!important;
     border-bottom: 1px solid var(--border-color);
     color: var(--text-color);
   }
 
   .chat-content {
-    background: white;
+    background: rgb(75, 109, 160)!important;
     color: var(--text-color);
+    white-space: pre-wrap; /* 支持Markdown格式 */
 
     .message {
       .message-content {
@@ -604,7 +634,7 @@ export default {
 
       &.user .message-content {
         background: #f0f2f5;
-        color: #000000;  /* 用户消息使用黑色文字 */
+        color: #000000;
         border: 1px solid #e4e7ed;
       }
 

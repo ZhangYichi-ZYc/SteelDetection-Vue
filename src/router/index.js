@@ -87,6 +87,12 @@ const routes = [
             path: 'faq', // 匹配 /monitoring/settings/faq
             name: 'FAQ',
             component: () => import('../views/settings/FAQ.vue')
+          },
+          // AI对话
+          {
+            path: 'ai', // 匹配 /monitoring/settings/ai
+            name: 'AI',
+            component: () => import('../views/settings/AI.vue')
           }
         ]
       }
