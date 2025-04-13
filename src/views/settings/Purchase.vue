@@ -1,12 +1,28 @@
 <template>
   <div class="purchase-container">
-    <h2>设备购买</h2>
-    <p>这里是设备购买页面。</p>
+    <iframe
+      src="https://shop.autovision.zust.top"
+      frameborder="0"
+      class="purchase-frame"
+    ></iframe>
   </div>
 </template>
 
+<script setup>
+// 组件逻辑可以在这里添加
+</script>
+
 <style scoped>
 .purchase-container {
-  padding: 2rem;
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+}
+
+.purchase-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
 }
 </style>
