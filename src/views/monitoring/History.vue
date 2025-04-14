@@ -214,8 +214,16 @@ export default {
       inspectionCountOption: {
         series: [{
           type: 'gauge',
-          detail: { formatter: '{value}%' },
-          data: [{ value: 37, name: '已完成' }]
+          detail: { 
+            formatter: '{value}%',
+            fontSize: 14,
+            offsetCenter: [0, '60%']
+          },
+          axisLabel: {
+            fontSize: 10,
+            distance: -30
+          },
+          data: [{ value:63, name: '已完成' }]
         }]
       },
       historyData: [

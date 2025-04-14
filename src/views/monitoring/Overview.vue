@@ -56,7 +56,7 @@
             <e-charts :option="completionChart" style="height: 200px" ref="completionChart"/>
             <div class="completion-stats">
               <div class="stat-item">
-                <div class="value">37%</div>
+                <div class="value">63%</div>
                 <div class="label">  已完成</div>
               </div>
                 <div class="stat-details">

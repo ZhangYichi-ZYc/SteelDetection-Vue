@@ -1,4 +1,3 @@
-
 <template>
   <div class="container">
     <!-- 顶部导航 -->
@@ -261,18 +260,16 @@ export default {
 
 <style scoped>
 .container {
-    /* 垂直水平居中必备 */
-    display: flex;          /* 触发弹性布局 */
-    justify-content: center; /* 主轴对齐 */
-    align-items: center;    /* 交叉轴对齐 */
-    min-height: 100vh;      /* 保证容器撑满屏幕 */
+    display: flex;          
+    justify-content: center; 
+    align-items: center;    
+    min-height: 100vh;      
     position: relative;
-    width: 1920px;
-    height: 1080px;
+    width: 100%;           /* 修改为100%以适应不同屏幕 */
+    height: 100vh;         /* 修改为100vh以适应不同屏幕 */
     opacity: 1;
-        
     background: #0F0B30;
-
+    overflow-x: hidden;    /* 防止水平滚动 */
 }
 /* 顶部导航 */
 .header {
@@ -340,13 +337,20 @@ letter-spacing: 0px;
     
 color: #FFFFFF; */
     
+.left-text {
+    position: absolute;
+    left: 10%;            /* 使用百分比定位 */
+    width: 40%;          /* 使用百分比宽度 */
+    min-width: 846px;    /* 设置最小宽度确保文字不会被压缩 */
+}
 .upper-text {
-  position: absolute;
-  left: 169px;
-  top: 391px;
-  display: flex; /* 使用 Flex 布局 */
-  align-items: baseline; /* 垂直居中 */
-  gap: 20px; /* 调整斜杠和文字间距 */
+    position: relative;   /* 改为相对定位 */
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 40px;
 }
 .gradient-text-1 {
   font-family: Poppins;
@@ -367,13 +371,12 @@ color: #FFFFFF; */
   -webkit-text-fill-color: transparent;
   margin: 0;
 }
-.bottom-text{
-position: absolute;
-left: 170px;
-top: 559px;
-width: 846px;
-height: 167px;
-opacity: 1;
+.bottom-text {
+    position: relative;   /* 改为相对定位 */
+    left: 0;
+    top: 0;
+    width: 100%;         /* 使用100%宽度 */
+    min-width: 846px;    /* 保持最小宽度 */
 }
 .solid-text {   
 font-family: YouSheBiaoTiHei;
@@ -389,17 +392,15 @@ margin: 0 0 20px 0; /* 调整段落间距 */
 }
 .main {
     position: absolute;
-left: 1159px;
-top: 243px;
-width: 549px;
-height: 673px;
-border-radius: 20px;
-opacity: 1;
-    
-background: rgba(255, 255, 255, 0.9);
-    
-box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
-    
+    right: 10%;          /* 使用右侧百分比定位 */
+    top: 50%;           /* 垂直居中 */
+    transform: translateY(-50%); /* 垂直居中 */
+    width: 549px;
+    height: 673px;
+    border-radius: 20px;
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
 }
 /* .qr-corner {
 position: absolute;
