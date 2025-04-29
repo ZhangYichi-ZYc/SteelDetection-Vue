@@ -237,7 +237,7 @@ export default {
       userInput: '',
       chatMessages: [],
       isLoading: false,
-      apiKey: 'sk-temG8svNtRWytx1TIIkgHL6yNbXIO6edjx9mio3Lj7iQ0W5j'
+      apiKey: 'sk-hwxNIm91wBrE5bqQnrFiQcClf6Snh02rU2t5eUXSQRmHF8wO'
     }
   },
   methods: {
