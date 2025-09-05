@@ -53,28 +53,28 @@
             </el-select>
           </div>
           <div class="completion-wrapper">
-            <e-charts :option="completionChart" style="height: 200px" ref="completionChart"/>
-            <div class="completion-stats">
+            <div class="chart-container">
+              <e-charts :option="completionChart" style="height: 250px; width: 250px;" ref="completionChart"/>
               <div class="stat-item">
                 <div class="value">63%</div>
-                <div class="label">  已完成</div>
+                <div class="label">已完成</div>
               </div>
-                <div class="stat-details">
-                  <div class="detail-item">
-                    <span class="dot completed"></span>
-                    <div class="content-group">
-                      <span class="number glow-text">23,834</span>
-                      <span class="text glow-text">实际完成</span>
-                    </div>
-                  </div>
-                  <div class="detail-item">
-                    <span class="dot uncompleted"></span>
-                    <div class="content-group">
-                      <span class="number glow-text">14,131</span>
-                      <span class="text glow-text">未完成</span>
-                    </div>
-                  </div>
+            </div>
+            <div class="stat-details">
+              <div class="detail-item">
+                <span class="dot completed"></span>
+                <div class="content-group">
+                  <span class="number glow-text">23,834</span>
+                  <span class="text glow-text">实际完成</span>
                 </div>
+              </div>
+              <div class="detail-item">
+                <span class="dot uncompleted"></span>
+                <div class="content-group">
+                  <span class="number glow-text">14,131</span>
+                  <span class="text glow-text">未完成</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -306,7 +306,7 @@ export default {
           name: '生产进度',
           type: 'pie',
           radius: ['65%', '80%'],
-          center: ['50%', '45%'],
+          center: ['50%', '50%'],
           avoidLabelOverlap: false,
           label: { show: false },
           itemStyle: {
@@ -763,7 +763,7 @@ font-size: 54px;
 
 .metric-card {
   position: relative;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 16px;
   margin-bottom: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -777,6 +777,7 @@ font-size: 54px;
   display: grid;
   grid-template-columns: auto auto;
   align-items: center;
+  border-radius: 12px 12px 0 0;
 
 }
 
@@ -802,7 +803,7 @@ font-size: 54px;
 
 ::v-deep(.el-select__wrapper) {
   align-items: center;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 0 0 1px #1B7EF2 inset !important;
   display: flex;
   font-size: 14px !important;
@@ -823,6 +824,7 @@ font-size: 54px;
 ::v-deep(.el-select-dropdown) {
   background: #1a2238 !important;
   border: 1px solid #1B7EF2 !important;
+  border-radius: 12px !important;
 }
 
 ::v-deep(.el-select-dropdown__item) {
@@ -872,15 +874,19 @@ font-size: 54px;
 }
 
 .stat-item{
-    position: relative;
-    left: 328px;
-    top: -140px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
     font-size: 24px;
+    z-index: 10;
+    pointer-events: none;
 }
 .stat-details{
-      left: 500px;
-    top: -90px;
-    position: relative;
+      position: absolute;
+      right: 20px;
+    bottom: 20px;
 }
 
 .stat-details {
@@ -946,7 +952,7 @@ position: absolute;
 
 .metric-card-1{
   position: relative;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 16px;
   margin-bottom: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -961,6 +967,7 @@ position: absolute;
 ;
     grid-template-columns: auto auto;
     align-items: center;
+    border-radius: 12px 12px 0 0;
 }
 
 .card-title-1 {
@@ -976,7 +983,7 @@ position: absolute;
 
 .metric-card-2{
   position: relative;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 16px;
   margin-bottom: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -991,6 +998,7 @@ position: absolute;
 ;
     grid-template-columns: auto auto;
     align-items: center;
+    border-radius: 12px 12px 0 0;
 }
 
 .card-title-2 {
@@ -1019,12 +1027,25 @@ position: absolute;
       height: 85%;
   margin-top: 20px;
     background: #1a2238;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.chart-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 /* 进度条 */
 .progress-bar {
   height: 8px;
   background: #252F4D;
-  border-radius: 4px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -1084,7 +1105,7 @@ position: absolute;
   padding: 2px 8px;
   background: #D16700;
   color: #fff;
-  border-radius: 2px;
+  border-radius: 12px;
   min-width: 20px;
   text-align: center;
 }

@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="content-2">
-        <img src="../../assets/摄像头安装流程 (1).png" alt="安装示意图2">
+        <img src="../../assets/摄像头安装流程 (10).png" alt="安装示意图2">
         <div class="instructions-2">
           <p style="text-align: left">逐步拧紧摄像头固定螺丝，确保其在检测环节位置稳固不晃动
           </p>
@@ -76,7 +76,8 @@
       </div>
       <h1 class="title">第二步：连接检测主机</h1>
       <div class="content-1">
-        <img src="../../assets/摄像头安装流程 (6).png" alt="安装示意图3">
+        
+        <img src="../../assets/摄像头安装流程 (11).png" alt="安装示意图2">
         <div class="instructions-1">
           <p style="text-align: left">取一根适配的数据线，一端插入摄像头预留的数据接口，确保插紧
           </p>

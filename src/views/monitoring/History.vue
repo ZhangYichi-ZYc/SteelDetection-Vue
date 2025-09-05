@@ -217,11 +217,17 @@ export default {
           detail: { 
             formatter: '{value}%',
             fontSize: 14,
-            offsetCenter: [0, '60%']
+            offsetCenter: [0, '35%']
           },
           axisLabel: {
             fontSize: 10,
             distance: -30
+          },
+          title: {
+            show: true,
+            offsetCenter: [0, '55%'],
+            fontSize: 14,
+            color: '#666'
           },
           data: [{ value:63, name: '已完成' }]
         }]
@@ -375,7 +381,7 @@ export default {
     height: 100%;
     background: white;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 2px 12px 0 var(--shadow-color);
     margin-bottom: 20px;
 
@@ -451,7 +457,7 @@ export default {
 /* 表格卡片样式 */
 .table-card {
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-top: 20px;
   border: 1px solid var(--border-color);
   box-shadow: 0 2px 12px 0 var(--shadow-color);
